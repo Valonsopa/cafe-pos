@@ -1,0 +1,99 @@
+﻿<Window x:Class="CafePos.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Cafe POS" Height="600" Width="1100">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="Server:" FontWeight="Bold" Margin="0,0,8,0"/>
+            <TextBlock x:Name="ServerStatus" Text="Starting..."/>
+        </StackPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- LEFT: Open Orders -->
+            <GroupBox Header="Open Orders" Grid.Column="0" Margin="0,0,10,0">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Margin="0,0,0,8" Foreground="Gray"
+                               Text="Click an order to checkout" />
+
+                    <ListView x:Name="OpenOrdersList"
+                              SelectionChanged="OpenOrdersList_SelectionChanged">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="#" Width="60" DisplayMemberBinding="{Binding orderNumber}" />
+                                <GridViewColumn Header="Source" Width="80" DisplayMemberBinding="{Binding source}" />
+                                <GridViewColumn Header="Table/Ticket" Width="120" DisplayMemberBinding="{Binding display}" />
+                                <GridViewColumn Header="Balance" Width="80" DisplayMemberBinding="{Binding balanceDisplay}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </DockPanel>
+            </GroupBox>
+
+            <!-- RIGHT: Checkout -->
+            <GroupBox Header="Checkout" Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Header -->
+                    <StackPanel Orientation="Vertical" Grid.Row="0" Margin="0,0,0,10">
+                        <TextBlock x:Name="CheckoutTitle" FontSize="18" FontWeight="Bold" Text="Select an order" />
+                        <TextBlock x:Name="CheckoutSubtitle" Foreground="Gray" Text=""/>
+                    </StackPanel>
+
+                    <!-- Items -->
+                    <GroupBox Header="Items" Grid.Row="1">
+                        <ListView x:Name="ItemsList">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Item" Width="260" DisplayMemberBinding="{Binding name}" />
+                                    <GridViewColumn Header="Qty" Width="60" DisplayMemberBinding="{Binding qty}" />
+                                    <GridViewColumn Header="Price" Width="80" DisplayMemberBinding="{Binding priceDisplay}" />
+                                    <GridViewColumn Header="Note" Width="220" DisplayMemberBinding="{Binding note}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </GroupBox>
+
+                    <!-- Totals + Actions -->
+                    <Border Grid.Row="2" Padding="10" BorderThickness="1" BorderBrush="#DDD" CornerRadius="6" Margin="0,10,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel>
+                                <TextBlock x:Name="TotalText" FontSize="14" Text="Total: -" />
+                                <TextBlock x:Name="PaidText" FontSize="14" Text="Paid: -" />
+                                <TextBlock x:Name="BalanceText" FontSize="16" FontWeight="Bold" Text="Balance: -" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                <Button x:Name="PayCashBtn" Content="Pay Cash" Width="110" Margin="0,0,8,0"
+                                        Click="PayCashBtn_Click" IsEnabled="False"/>
+                                <Button x:Name="PayCardBtn" Content="Pay Card" Width="110" Margin="0,0,8,0"
+                                        Click="PayCardBtn_Click" IsEnabled="False"/>
+                                <Button x:Name="CloseBtn" Content="Close Order" Width="120"
+                                        Click="CloseBtn_Click" IsEnabled="False"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</Window>

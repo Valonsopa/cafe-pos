@@ -1,0 +1,20 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+
+# SQLite database (optional)
+*.db
+*.sqlite
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Rider / VS
+.vs/
+.idea/
+
+# Logs
+*.log
